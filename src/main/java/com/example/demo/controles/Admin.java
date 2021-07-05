@@ -43,7 +43,7 @@ public class Admin {
             response.getWriter().println("</form>");
         }
         else{
-            response.getWriter().println("<p><a href = \'/config\'></a></p>");
+            response.sendRedirect("/config");
         }
 
         DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy_HH:mm:ss");
