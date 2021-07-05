@@ -21,18 +21,20 @@ public class Cliente {
         TabuleiroDAO tdao = new TabuleiroDAO();
 
         response.getWriter().println("<h1>Cliente</h1>");
-        response.getWriter().println("<table> <tr> <th>Nome</th> <th>Valor</th> <th>quantidade</th> <th>Descrição</th> <th>classificação</th> <th> </th> </tr>");
+        response.getWriter().println("<table> <tr> <th>ID</th> <th>Nome</th> <th>Valor</th> <th>quantidade</th> <th>Descrição</th> <th>classificação</th> <th> </th> </tr>");
 
         for(Tabuleiro t : tdao.selectALL()){
             response.getWriter().println("<tr>");
+            response.getWriter().println("<td>" + t.getId() + "</td>");
             response.getWriter().println("<td>" + t.getNome() + "</td>");
             response.getWriter().println("<td>" + t.getValor() + "</td>");
             response.getWriter().println("<td>" + t.getQuantidade() + "</td>");
-            response.getWriter().println("<td>" + t.getDescrição() + "</td>");
-            response.getWriter().println("<td>" + t.getClassificação() + "</td>");
-            response.getWriter().println("<td><a href = \'/cliente/adicionarCarrinho?id= "+ t.getID() + "\'>Adicionar</a></td>");
+            response.getWriter().println("<td>" + t.getDescricao() + "</td>");
+            response.getWriter().println("<td>" + t.getClassificacao() + "</td>");
+            response.getWriter().println("<td><a href = \'/cliente/adicionarCarrinho?id="+t.getId()+"\'>Adicionar</a></td>");
             response.getWriter().println("</tr>");
         }
+
         response.getWriter().println("</table>");
         response.getWriter().println("<p><a href = \'/cliente/verCarrinho\'>Ver carrinho</a></p>");
 
@@ -52,6 +54,8 @@ public class Cliente {
         ArrayList<Tabuleiro> t = (ArrayList<Tabuleiro>)session.getAttribute("carrinho");
 
         t.add(tdao.select(Integer.parseInt(request.getParameter("id"))));
+
+        response.sendRedirect("/cliente");
     }
 
     @RequestMapping("/verCarrinho")
@@ -61,16 +65,17 @@ public class Cliente {
         HttpSession session = request.getSession();
 
         if(session.getAttribute("carrinho") != null){
-            response.getWriter().println("<table> <tr> <th> nome </th> <th> valor </th> <th> quantidade </th> <th> descrição </th> <th> classificação </th> <th> </th>");
+            response.getWriter().println("<table> <tr> <th>ID</th> <th> nome </th> <th> valor </th> <th> quantidade </th> <th> descrição </th> <th> classificação </th> <th> </th>");
             ArrayList<Tabuleiro> listar = (ArrayList<Tabuleiro>)session.getAttribute("carrinho");
 
             for(Tabuleiro t : listar){
                 response.getWriter().println("<tr>");
+                response.getWriter().println("<td>" + t.getId() + "</td>");
                 response.getWriter().println("<td>" + t.getNome() + "</td>");
                 response.getWriter().println("<td>" + t.getValor() + "</td>");
                 response.getWriter().println("<td>" + t.getQuantidade() + "</td>");
-                response.getWriter().println("<td>" + t.getDescrição() + "</td>");
-                response.getWriter().println("<td>" + t.getClassificação() + "</td>");
+                response.getWriter().println("<td>" + t.getDescricao() + "</td>");
+                response.getWriter().println("<td>" + t.getClassificacao() + "</td>");
                 response.getWriter().println("</tr>");
             }
             response.getWriter().println("</table>");

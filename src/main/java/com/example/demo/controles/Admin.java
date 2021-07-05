@@ -27,14 +27,16 @@ public class Admin {
 
         if(tdao.exists()) {
             response.getWriter().println("<form method = \'POST\' action = \'/admin/cadastrar\' >");
+            //response.getWriter().println("<label for = \'id\'> ID: </label> <br>");
+            //response.getWriter().println("<input type = \'number\' id = \'id\' name = \'id\'><br>");
             response.getWriter().println("<label for = \'nome\'> Nome do tabuleiro: </label> <br>");
             response.getWriter().println("<input type = \'text\' id = \'nome\' name = \'nome\'><br>");
             response.getWriter().println("<label for = \'nome\'> Valor: </label> <br>");
             response.getWriter().println("<input type = \'number\' id = \'valor\' name = \'valor\'><br>");
-            response.getWriter().println("<label for = \'nome\'> Descrição: </label> <br>");
+            response.getWriter().println("<label for = \'number\'> Quantidade: </label> <br>");
+            response.getWriter().println("<input type = \'text\' id = \'quantidade\' name = \'quantidade\'><br>");
+            response.getWriter().println("<label for = \'nome\'> Descricao: </label> <br>");
             response.getWriter().println("<input type = \'text\' id = \'descricao\' name = \'descricao\'><br>");
-            response.getWriter().println("<label for = \'nome\'> Quantidade: </label> <br>");
-            response.getWriter().println("<input type = \'number\' id = \'quantidade\' name = \'quantidade\'><br>");
             response.getWriter().println("<label for = \'nome\'> Classificação: </label> <br>");
             response.getWriter().println("<input type = \'text\' id = \'classificacao\' name = \'classificacao\'><br>");
             response.getWriter().println("<input type = \'submit\' value = \'cadastrar\'>");
@@ -59,6 +61,8 @@ public class Admin {
 
         tdao.create();
         tdao.insert(new Tabuleiro());
+
+        response.sendRedirect("/admin");
     }
 
     @RequestMapping(value = "/cadastrar", method = RequestMethod.POST)
@@ -66,12 +70,12 @@ public class Admin {
         TabuleiroDAO tdao = new TabuleiroDAO();
         Tabuleiro t = new Tabuleiro();
 
-        t.setID(Integer.parseInt(request.getParameter("id")));
+        //t.setId(Integer.parseInt(request.getParameter("id")));
         t.setNome(request.getParameter("nome"));
         t.setValor(Integer.parseInt(request.getParameter("valor")));
-        t.setDescrição(request.getParameter("descricao"));
         t.setQuantidade(Integer.parseInt(request.getParameter("quantidade")));
-        t.setClassificação(request.getParameter("classificacao"));
+        t.setDescricao(request.getParameter("descricao"));
+        t.setClassificacao(request.getParameter("classificacao"));
 
         tdao.insert(t);
 
